@@ -1,13 +1,12 @@
 {
-  "name": "",
+  "name": "immutate",
   "version": "1.0.0",
   "description": "",
-  "main": "./dist",
-  "types": "./dist",
   "scripts": {
     "test": "jest",
     "build": "tsc"
   },
+  "main": "./dist/index.js",
   "keywords": [],
   "author": "Alec Featherston <alecfeatherston@gmail.com>",
   "license": "ISC",

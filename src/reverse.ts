@@ -1,12 +1,12 @@
-import {Mutator} from './Mutator'
+import {Immutate} from './Immutate'
 
-declare module './Mutator' {
-    interface Mutator<T> {
+declare module './Immutate' {
+    interface Immutate<T> {
         reverse(): any[]
     }
 }
 
-Mutator.prototype.reverse = function() {
+Immutate.prototype.reverse = function() {
     let {newObj, target} = this._getMutated()
     target[this.accessors[this.accessors.length - 1]] = [...target[this.accessors[this.accessors.length - 1]]]
     this.current = newObj

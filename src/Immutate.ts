@@ -1,18 +1,18 @@
 import fmap from "./helpers/fmap";
 import shallowCopy from "./helpers/shallowCopy";
 
-export class Mutator<T> {
+export class Immutate<T> {
     current: T
     accessors: (string | number)[] = []
     constructor(public inital: T) {
         this.current = inital
     }
 
-    a(accessorString: string): Mutator<T> {
+    a(accessorString: string): Immutate<T> {
         return this.access(accessorString)
     }
 
-    access(accessorString: string): Mutator<T> {
+    access(accessorString: string): Immutate<T> {
         const unbracketed = fmap<any>(accessorString.split('['), ele => {
         const split = ele.split(']');
         if(split.length > 1) {

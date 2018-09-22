@@ -1,12 +1,12 @@
-import {Mutator} from './Mutator'
+import {Immutate} from './Immutate'
 
-declare module './Mutator' {
-    interface Mutator<T> {
+declare module './Immutate' {
+    interface Immutate<T> {
         shift(): any
     }
 }
 
-Mutator.prototype.shift = function() {
+Immutate.prototype.shift = function() {
     let {newObj, target} = this._getMutated()
     target[this.accessors[this.accessors.length - 1]] = [...target[this.accessors[this.accessors.length - 1]]]
     this.current = newObj
