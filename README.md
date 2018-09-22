@@ -17,7 +17,7 @@ obj // {bob: {friends:['sally'], gender: 'male'}}
 
 Whenever you set or delete a value or perform an array operation, immutate goes through
 and changes every object reference as it indexes through to change the value, without
-modifying the original object. In other words
+modifying the original object. In other words:
 
 ```javascript
 let state = {
@@ -47,7 +47,7 @@ let newState = {
     }
 }
 ```
-becomes
+becomes:
 
 ```javascript
 const mutator = new Immutate(state)

@@ -203,11 +203,11 @@ export class Immutate<T> {
 
     fill(...args: [any, number?, number?]): any[] {
         let array = this._getArray()
-        return array.fill(...args)
+        return (array as any).fill(...args)
     }
 
     copyWithin(...args: [number, number, number | undefined]): any[] {
         let array = this._getArray()
-        return array.copyWithin(...args)
+        return (array as any).copyWithin(...args)
     }
 }

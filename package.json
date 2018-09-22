@@ -1,7 +1,8 @@
 {
   "name": "immutate.js",
   "version": "1.1.0",
-  "description": "A helper libary for changing state immutably without using spread operators, Object.assign or proxies.",
+  "homepage": "https://github.com/afeather123/immutate.js",
+  "description": "A helper library for changing state immutably without using spread operators or proxies.",
   "scripts": {
     "test": "jest",
     "build": "tsc"
