@@ -1,0 +1,30 @@
+{
+  "name": "mutation",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./dist",
+  "types": "./dist",
+  "scripts": {
+    "test": "jest",
+    "build": "tsc"
+  },
+  "keywords": [],
+  "author": "Alec Featherston <alecfeatherston@gmail.com>",
+  "license": "ISC",
+  "jshintConfig": {
+    "esversion": 6
+  },
+  "devDependencies": {
+    "@types/jest": "^23.3.2",
+    "babel-core": "^6.26.3",
+    "babel-jest": "^23.6.0",
+    "babel-preset-env": "^1.7.0",
+    "jest": "^23.6.0",
+    "regenerator-runtime": "^0.12.1",
+    "ts-jest": "^23.10.1",
+    "typescript": "^3.0.3"
+  },
+  "jest": {
+    "preset": "ts-jest"
+  }
+}
