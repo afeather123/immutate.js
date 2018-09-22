@@ -1,2 +1,2 @@
-import {Immutate} from './Immutate'
+import {Immutate} from './immutate'
 export {Immutate}

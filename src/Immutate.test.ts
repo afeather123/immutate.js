@@ -1,8 +1,4 @@
-import {Immutate} from './Immutate';
-import './push'
-import './pop'
-import './unshift'
-import './shift'
+import {Immutate} from './immutate';
 
 describe('mutate', () => {
 

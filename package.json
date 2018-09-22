@@ -24,6 +24,9 @@
     "typescript": "^3.0.3"
   },
   "jest": {
-    "preset": "ts-jest"
+    "preset": "ts-jest",
+    "modulePathIgnorePatterns": [
+      "./dist/"
+    ]
   }
 }
