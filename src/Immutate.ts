@@ -26,27 +26,27 @@ export class Immutate<T> {
      */
     access(accessorString: string): Immutate<T> {
         const unbracketed = fmap<any>(accessorString.split('['), ele => {
-        const split = ele.split(']');
-        if(split.length > 1) {
-            const inBrackets = split[0];
-            if(!isNaN(inBrackets)) split[0] = Number(inBrackets);
-            else split[0] = [split[0]];
-        }
-        return split;
+            const split = ele.split(']');
+            if(split.length > 1) {
+                const inBrackets = split[0];
+                if(!isNaN(inBrackets)) split[0] = Number(inBrackets);
+                else split[0] = [split[0]];
+            }
+            return split;
         });
     
         const newAccessors = fmap<any>(unbracketed, ele => {
             switch(typeof ele) {
                 case 'string':
-                const split = ele.split('.');
-                if(split[0] === '') split.shift();
-                return split;
+                const split = (ele as string).split('.');
+                return split.filter(field => field !== '');
                 case 'object':
                 return ele;
                 case 'number':
                 return [ele];
             }
         });
+
         this._accessors = [...this._accessors, ...newAccessors]
         return this
     }
@@ -81,7 +81,7 @@ export class Immutate<T> {
      */
     set(value: any): T {
         let {newObj, target} = this._getMutated()
-        if(this._accessors.length > 1) {
+        if(this._accessors.length > 0) {
             target[this._accessors[this._accessors.length - 1]] = value
             this.nextState = newObj as T
         } else {
@@ -120,13 +120,14 @@ export class Immutate<T> {
     */
     private _getMutated(): {newObj: T, target: any} {
         let target = shallowCopy(this.nextState)
-        let newObj = target
+        const newObj = target
         for(let i = 0; i < this._accessors.length - 1; i++) {
             const key = this._accessors[i]
             if(typeof target !== 'object') throw new Error(`Cannot access property ${key} of ${JSON.stringify(target)}`)
             target[key] = shallowCopy(target[key])
             target = target[key]
         }
+        this.nextState = newObj
         return {newObj, target}
     }
 
@@ -140,7 +141,6 @@ export class Immutate<T> {
             const lastKey = this._accessors[this._accessors.length - 1]
             if(!Array.isArray(target[lastKey])) throw new Error(`Property ${lastKey} of ${JSON.stringify(target)} is not an array`)
             target[lastKey] = [...target[lastKey]]
-            this.nextState = newObj
             this._clearAccessors()
             return target[lastKey]
         }
@@ -179,18 +179,21 @@ export class Immutate<T> {
         return array.shift()
     }
 
+
+    
+
     /**Sorts the array at the current accessor path and returns it. */
-    sort(...args: [((a:any, b: any) => number)?]): any[] {
+    sort(sort?: (a:any, b: any) => number): any[] {
         let array = this._getArray()
-        return array.sort(...args)
+        return array.sort(sort)
     }
 
     /**Performs the slice operation on the array at the given accessor
      * path and returns the removed elements.
     */
-    splice(...args: [number, number | undefined]): any[] {
+    splice(index: number, count: number): any[] {
         let array = this._getArray()
-        return array.splice(...args)
+        return array.splice(index, count)
     }
     
     /**Adds the given element to the array at the current accessor path
@@ -201,13 +204,13 @@ export class Immutate<T> {
         return array.unshift(value)
     }
 
-    fill(...args: [any, number?, number?]): any[] {
+    fill(value: any, index?: number, count?: number): any[] {
         let array = this._getArray()
-        return (array as any).fill(...args)
+        return (array as any).fill(value, index, count)
     }
 
-    copyWithin(...args: [number, number, number | undefined]): any[] {
+    copyWithin(target: number, start: number, end?: number): any[] {
         let array = this._getArray()
-        return (array as any).copyWithin(...args)
+        return (array as any).copyWithin(target, start, end)
     }
 }

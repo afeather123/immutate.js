@@ -8,6 +8,39 @@ describe('mutate', () => {
         expect(mutator.nextState).toMatchObject({bob: {age: 6}})
     });
 
+    test('set single accessor', () => {
+        let mutator = new Immutate({name: 'bob'})
+        mutator.a('name')
+        expect(mutator['_accessors']).toMatchObject(['name']) 
+    })
+
+    test('sets single properly',() => {
+        let mutator = new Immutate({name: 'bob'})
+        mutator.a('name').set('joe')
+        expect(mutator.nextState).toMatchObject({name: 'joe'});
+    })
+
+    test('sets single property with array', () => {
+        let mutator = new Immutate({friends: ['sally', 'bob']})
+        let newFriends = ['martin', 'joe']
+        mutator.a('friends').set(newFriends)
+        expect(mutator.nextState.friends).toBe(newFriends)
+    })
+
+    test('starting dot accessor OK', () => {
+        let mutator = new Immutate({name: 'bob'})
+        mutator.a('.name').set('joe')
+        expect(mutator.nextState).toMatchObject({name: 'joe'});
+    })
+
+    test('_getMutated gets proper values with 1 argument', () => {
+        let mutator = new Immutate({name: 'sally'})
+        mutator.a('name')
+        let {newObj, target} = mutator['_getMutated']()
+        expect(newObj).toBe(mutator.nextState)
+        expect(newObj).toBe(target)
+    })
+
     test('set indexes through arrays', () => {
         let test = {bob:{friends:['greg', 'sally']}}
         let mutator = new Immutate(test)
